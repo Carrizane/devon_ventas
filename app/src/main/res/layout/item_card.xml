@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="1dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:id="@+id/card_item">
+
+    <RelativeLayout
+        android:padding="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/cartName"
+            android:text="@string/name"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:id="@+id/cartPrice"
+            android:layout_below="@id/cartName"
+            android:text="@string/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:id="@+id/plusBtn"
+            android:layout_below="@+id/cartName"
+            android:layout_toStartOf="@+id/cartNumber"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="+"/>
+
+        <TextView
+            android:id="@+id/cartNumber"
+            android:layout_below="@+id/cartName"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="@string/number"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_toStartOf="@+id/minusBtn"/>
+
+        <Button
+            android:id="@+id/minusBtn"
+            android:layout_below="@+id/cartName"
+            android:layout_alignEnd="@id/cartName"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="-"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
