@@ -3,7 +3,9 @@ package com.carrizane.ventasapp;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
 
     @Expose
     @SerializedName("_id")
@@ -24,6 +26,18 @@ public class Product {
     @Expose
     @SerializedName("price")
     private Double price;
+
+    @Expose
+    @SerializedName("quantity")
+    private int quantity;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public String get_id() {
         return _id;

@@ -15,4 +15,8 @@
     <string name="Stock">Stock</string>
     <string name="btn">Confirm Order</string>
     <string name="number">Number</string>
+    <string name="sale">Sale COde</string>
+    <string name="code">Sale Code</string>
+    <string name="total">Sale Total Price</string>
+    <string name="date">Sale Date</string>
 </resources>

@@ -5,11 +5,9 @@ import android.os.Bundle;
 
 import com.andremion.counterfab.CounterFab;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -20,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     List<Product> productsList;
 
     CounterFab counter;
+    FloatingActionButton sales;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +54,25 @@ public class MainActivity extends AppCompatActivity {
         );
 
         counter = findViewById(R.id.counter_fab);
+        sales = findViewById(R.id.salesButton);
 
-        Intent intent = new Intent(MainActivity.this, SaleActivity.class);
-        ArrayList<String> id = new ArrayList<>();
+        sales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), SaleActivity.class));
+            }
+        });
+
+        Intent intent = new Intent(MainActivity.this, CartActivity.class);
+        ArrayList<Product> selected = new ArrayList<>();
+        Bundle args = new Bundle();
 
         itemClickListener = ((view, position) -> {
-            id.add(productsList.get(position).get_id());
-            intent.putStringArrayListExtra("arrayId", id);
-            Log.i("Cantidad_ID",String.valueOf(id.size()));
+            productsList.get(position).setQuantity(1);
+            selected.add(productsList.get(position));
+            args.putSerializable("arrayProduct", (Serializable) selected);
+            intent.putExtra("array", args);
+            Log.i("Cantidad_ID",String.valueOf(selected.size()));
             Toast.makeText(this, "Added " + productsList.get(position).getName() + " to cart", Toast.LENGTH_SHORT).show();
             counter.increase();
         });
@@ -75,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getProducts(){
-        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        ApiInterface apiInterface = ApiClient.getApiProductClient().create(ApiInterface.class);
         Call<List<Product>> call = apiInterface.getAllProducts();
         call.enqueue(new Callback<List<Product>>() {
             @Override
@@ -84,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
                     onGetResult(response.body());
                 }
             }
-
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
                 onErrorLoading(t.getLocalizedMessage());
